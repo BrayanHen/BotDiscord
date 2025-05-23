@@ -114,10 +114,22 @@ async def monitorar_links():
 
 @bot.command()
 async def limpar(ctx):
-    canal = ctx.channel
-    novo_canal = await canal.clone(reason="Limpar todas as mensagens")
-    await canal.delete()
-    await novo_canal.send("✅ Canal limpo com sucesso!", delete_after=5)
+    canal_antigo = ctx.channel
+    canal_id_antigo = canal_antigo.id
+
+    # Clonar o canal
+    novo_canal = await canal_antigo.clone(reason="Limpar todas as mensagens")
+
+    # Transferir dados de monitoramento, se houver
+    if canal_id_antigo in monitoramento_por_canal:
+        monitoramento_por_canal[novo_canal.id] = monitoramento_por_canal.pop(canal_id_antigo)
+        salvar_monitoramento()
+
+    # Excluir o canal antigo
+    await canal_antigo.delete()
+
+    # Enviar mensagem no novo canal
+    await novo_canal.send("✅ Canal limpo com sucesso e links monitorados mantidos!", delete_after=5)
 
 @bot.command(name="listar")
 async def listar_links(ctx):
