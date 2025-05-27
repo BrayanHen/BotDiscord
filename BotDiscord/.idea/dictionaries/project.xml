@@ -2,13 +2,19 @@
   <dictionary name="project">
     <words>
       <w>adicionado</w>
+      <w>almosso</w>
+      <w>almossou</w>
       <w>apenas</w>
+      <w>arquivo</w>
       <w>atual</w>
       <w>autorestart</w>
+      <w>carregar</w>
       <w>conectado</w>
       <w>correspondente</w>
+      <w>desse</w>
       <w>digite</w>
       <w>disparo</w>
+      <w>encontrada</w>
       <w>encontrado</w>
       <w>entrou</w>
       <w>erro</w>
@@ -17,6 +23,7 @@
       <w>extrair</w>
       <w>falar</w>
       <w>fkrp</w>
+      <w>imagem</w>
       <w>inicial</w>
       <w>inicializado</w>
       <w>iniciar</w>
@@ -27,10 +34,12 @@
       <w>limparcanal</w>
       <w>listar</w>
       <w>mensagens</w>
+      <w>minha</w>
       <w>monitorado</w>
       <w>monitorados</w>
       <w>monitoramento</w>
       <w>monitorar</w>
+      <w>mosso</w>
       <w>nenhum</w>
       <w>nkge</w>
       <w>novamente</w>
@@ -42,10 +51,12 @@
       <w>removida</w>
       <w>removido</w>
       <w>resultado</w>
+      <w>salvar</w>
       <w>sendo</w>
       <w>servidor</w>
       <w>somar</w>
       <w>sucesso</w>
+      <w>tankou</w>
       <w>tente</w>
       <w>todas</w>
       <w>usando</w>
