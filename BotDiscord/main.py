@@ -195,7 +195,7 @@ async def on_member_remove(member: discord.Member):
     if canal:
         await canal.send(f'Até mais {member.mention} 😃!')
 
-@tasks.loop(minutes=30)
+@tasks.loop(seconds=30)
 async def almosso():
     agora = datetime.datetime.now()
     if agora.hour == 12 and agora.minute == 30:
