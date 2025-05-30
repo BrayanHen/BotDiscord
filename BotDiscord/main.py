@@ -43,10 +43,15 @@ def carregar_monitoramento():
 async def on_ready():
     print(f"✅ Bot conectado como {bot.user}")
     carregar_monitoramento()
+
     if not almosso.is_running():
         almosso.start()
-    if monitoramento_por_canal and not monitorar_links.is_running():
-        monitorar_links.start()
+
+    if monitorar_links.is_running():
+        monitorar_links.cancel()
+        await asyncio.sleep(1)  # Dá tempo pro loop parar antes de reiniciar
+
+    monitorar_links.start()
 
 @bot.command(name="monitorar")
 async def iniciar_monitoramento(ctx):
@@ -102,14 +107,18 @@ async def monitorar_links():
     for canal_id, urls in monitoramento_por_canal.items():
         canal = bot.get_channel(canal_id)
         if not canal:
+            print(f"⚠️ Canal {canal_id} não encontrado.")
             continue
 
         for url, ultimo_link in list(urls.items()):
-            link_atual = await extrair_primeiro_link(url)
-            if link_atual and link_atual != ultimo_link:
-                monitoramento_por_canal[canal_id][url] = link_atual
-                salvar_monitoramento()
-                await canal.send(f"🔗 Novo link encontrado em `{url}`: {link_atual}")
+            try:
+                link_atual = await extrair_primeiro_link(url)
+                if link_atual and link_atual != ultimo_link:
+                    monitoramento_por_canal[canal_id][url] = link_atual
+                    salvar_monitoramento()
+                    await canal.send(f"🔗 Novo link encontrado em `{url}`: {link_atual}")
+            except Exception as e:
+                print(f"❌ Erro ao verificar {url} no canal {canal_id}: {e}")
 
 @bot.command()
 async def limpar(ctx):
@@ -198,11 +207,11 @@ async def on_member_remove(member: discord.Member):
 @tasks.loop(seconds=30)
 async def almosso():
     agora = datetime.datetime.now()
-    if agora.hour == 12 and agora.minute == 30:
+    if agora.hour == 12 and 30 <= agora.minute < 31:
         canal = bot.get_channel(1374444227370422384)
         if canal:
             minha_embed = discord.Embed(
-                title="O dono desse servidor almossou",
+                title="🍽️ O dono desse servidor almossou",
                 description="O dono não tankou o al-mosso"
             )
 
